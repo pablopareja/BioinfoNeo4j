@@ -47,4 +47,8 @@ public abstract class BasicEntity {
         return node;
     }
 
+    public String getNodeType(){
+        return nodeType;
+    }
+
 }
