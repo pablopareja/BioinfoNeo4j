@@ -14,7 +14,10 @@ import org.neo4j.graphdb.Node;
 public abstract class BasicEntity {
 
 
+    protected String nodeType = null;
+
     protected Node node = null;
+
 
     public BasicEntity(Node n){
         node = n;
