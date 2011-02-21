@@ -21,28 +21,21 @@ import org.neo4j.kernel.EmbeddedGraphDatabase;
  */
 public class Neo4jManager {
 
-    private static GraphDatabaseService graphService = null;
-    private static IndexService indexService = null;
-    private static IndexService fullTextIndexService = null;
-    private static IndexService fullTextQueryIndexService = null;
+    protected GraphDatabaseService graphService = null;
+    protected IndexService indexService = null;
+    protected IndexService fullTextIndexService = null;
+    protected IndexService fullTextQueryIndexService = null;
     //private static PathFinder pathFinder = null;
 
-    public Neo4jManager(String dbFolder) {
-        if (checkDbServiceIsNull()) {
+    public Neo4jManager(String dbFolder, boolean createServices) {
+
+        if (createServices) {
             graphService = new EmbeddedGraphDatabase(dbFolder);
             indexService = new LuceneIndexService(graphService);
             fullTextIndexService = new LuceneFulltextIndexService(graphService);
             fullTextQueryIndexService = new LuceneFulltextQueryIndexService(graphService);
         }
 
-    }
-
-    public static Neo4jManager getNeo4JManager(String dbFolder) {
-        return new Neo4jManager(dbFolder);
-    }
-
-    private synchronized static boolean checkDbServiceIsNull() {
-        return graphService == null;
     }
 
     public Node createNode() {
@@ -79,23 +72,23 @@ public class Neo4jManager {
         fullTextIndexService.shutdown();
     }
 
-    public Node getReferenceNode(){
+    public Node getReferenceNode() {
         return graphService.getReferenceNode();
     }
 
-
-    public IndexService getIndexService(){
+    public IndexService getIndexService() {
         return indexService;
     }
-    public IndexService getFullTextIndexService(){
+
+    public IndexService getFullTextIndexService() {
         return fullTextIndexService;
     }
-    public IndexService getFullTextQueryIndexService(){
+
+    public IndexService getFullTextQueryIndexService() {
         return fullTextQueryIndexService;
     }
 
-
-    public GraphDatabaseService getGraphService(){
+    public GraphDatabaseService getGraphService() {
         return graphService;
     }
 }
