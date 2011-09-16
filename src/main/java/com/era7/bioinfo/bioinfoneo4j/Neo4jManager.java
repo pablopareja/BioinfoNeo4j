@@ -9,10 +9,6 @@ import org.neo4j.graphdb.GraphDatabaseService;
 import org.neo4j.graphdb.Node;
 import org.neo4j.graphdb.Relationship;
 import org.neo4j.graphdb.Transaction;
-import org.neo4j.index.IndexService;
-import org.neo4j.index.lucene.LuceneFulltextIndexService;
-import org.neo4j.index.lucene.LuceneFulltextQueryIndexService;
-import org.neo4j.index.lucene.LuceneIndexService;
 import org.neo4j.kernel.EmbeddedGraphDatabase;
 
 /**
@@ -22,18 +18,11 @@ import org.neo4j.kernel.EmbeddedGraphDatabase;
 public class Neo4jManager {
 
     protected GraphDatabaseService graphService = null;
-    protected IndexService indexService = null;
-    protected IndexService fullTextIndexService = null;
-    protected IndexService fullTextQueryIndexService = null;
-    //private static PathFinder pathFinder = null;
 
     public Neo4jManager(String dbFolder, boolean createServices) {
 
         if (createServices) {
             graphService = new EmbeddedGraphDatabase(dbFolder);
-            indexService = new LuceneIndexService(graphService);
-            fullTextIndexService = new LuceneFulltextIndexService(graphService);
-            fullTextQueryIndexService = new LuceneFulltextQueryIndexService(graphService);
         }
 
     }
@@ -68,24 +57,10 @@ public class Neo4jManager {
 
     public void shutDown() {
         graphService.shutdown();
-        indexService.shutdown();
-        fullTextIndexService.shutdown();
     }
 
     public Node getReferenceNode() {
         return graphService.getReferenceNode();
-    }
-
-    public IndexService getIndexService() {
-        return indexService;
-    }
-
-    public IndexService getFullTextIndexService() {
-        return fullTextIndexService;
-    }
-
-    public IndexService getFullTextQueryIndexService() {
-        return fullTextQueryIndexService;
     }
 
     public GraphDatabaseService getGraphService() {
