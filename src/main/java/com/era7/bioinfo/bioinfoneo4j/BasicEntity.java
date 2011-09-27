@@ -48,8 +48,12 @@ public abstract class BasicEntity {
         return node;
     }
 
-//    public String getNodeType(){
-//        return nodeType;
-//    }
+    public String getNodeType(){
+        return String.valueOf(node.getProperty(NODE_TYPE_PROPERTY));
+    }
+    
+    public void setNodeType(String value){
+        node.setProperty(NODE_TYPE_PROPERTY, value);
+    }
 
 }
