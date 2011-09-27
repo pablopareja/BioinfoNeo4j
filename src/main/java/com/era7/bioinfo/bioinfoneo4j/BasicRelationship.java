@@ -48,5 +48,8 @@ public abstract class BasicRelationship implements RelationshipType{
         return true;
     }
     
+    public Relationship getRelationship(){
+        return relationship;
+    }
 
 }

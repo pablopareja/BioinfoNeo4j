@@ -13,8 +13,9 @@ import org.neo4j.graphdb.Node;
  */
 public abstract class BasicEntity {
 
+    public static final String NODE_TYPE_PROPERTY = "nodeType";
 
-    protected String nodeType = null;
+    //protected String nodeType = null;
 
     protected Node node = null;
 
@@ -47,8 +48,8 @@ public abstract class BasicEntity {
         return node;
     }
 
-    public String getNodeType(){
-        return nodeType;
-    }
+//    public String getNodeType(){
+//        return nodeType;
+//    }
 
 }
