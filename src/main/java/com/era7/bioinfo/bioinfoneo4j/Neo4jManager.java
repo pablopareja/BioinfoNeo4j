@@ -10,6 +10,7 @@ import org.neo4j.graphdb.Node;
 import org.neo4j.graphdb.Relationship;
 import org.neo4j.graphdb.Transaction;
 import org.neo4j.kernel.EmbeddedGraphDatabase;
+import org.neo4j.kernel.EmbeddedReadOnlyGraphDatabase;
 
 /**
  *
@@ -17,16 +18,21 @@ import org.neo4j.kernel.EmbeddedGraphDatabase;
  */
 public class Neo4jManager {
 
-    protected GraphDatabaseService graphService = null;
+    protected static GraphDatabaseService graphService = null;
 
-    public Neo4jManager(String dbFolder, boolean createServices) {
-
+    public Neo4jManager(String dbFolder, boolean createServices, boolean readOnly) {
+        
         if (createServices) {
-            graphService = new EmbeddedGraphDatabase(dbFolder);
+            if(!readOnly){
+                graphService = new EmbeddedGraphDatabase(dbFolder);
+            }else{
+                graphService = new EmbeddedReadOnlyGraphDatabase(dbFolder);
+            }
+            
         }
 
     }
-
+    
     public Node createNode() {
         return graphService.createNode();
     }
