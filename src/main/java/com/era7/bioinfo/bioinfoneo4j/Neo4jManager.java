@@ -1,10 +1,21 @@
 /*
- * To change this template, choose Tools | Templates
- * and open the template in the editor.
+ * Copyright (C) 2010-2012  "Oh no sequences!"
+ *
+ * This is free software: you can redistribute it and/or modify
+ * it under the terms of the GNU Affero General Public License as
+ * published by the Free Software Foundation, either version 3 of the
+ * License, or (at your option) any later version.
+ * This program is distributed in the hope that it will be useful,
+ * but WITHOUT ANY WARRANTY; without even the implied warranty of
+ * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+ * GNU Affero General Public License for more details.
+ * You should have received a copy of the GNU Affero General Public License
+ * along with this program.  If not, see <http://www.gnu.org/licenses/>
  */
 package com.era7.bioinfo.bioinfoneo4j;
 
 import java.util.Iterator;
+import java.util.Map;
 import org.neo4j.graphdb.GraphDatabaseService;
 import org.neo4j.graphdb.Node;
 import org.neo4j.graphdb.Relationship;
@@ -20,17 +31,24 @@ public class Neo4jManager {
 
     protected static GraphDatabaseService graphService = null;
 
-    public Neo4jManager(String dbFolder, boolean createServices, boolean readOnly) {
+    public Neo4jManager(String dbFolder, boolean createServices, boolean readOnly, Map<String, String> config) {
         
         if (createServices) {
             if(!readOnly){
-                graphService = new EmbeddedGraphDatabase(dbFolder);
+                if(config != null){
+                    graphService = new EmbeddedGraphDatabase(dbFolder,config);
+                }else{
+                    graphService = new EmbeddedGraphDatabase(dbFolder);
+                }
+                
             }else{
-                graphService = new EmbeddedReadOnlyGraphDatabase(dbFolder);
-            }
-            
-        }
-
+                if(config != null){
+                    graphService = new EmbeddedReadOnlyGraphDatabase(dbFolder,config);
+                }else{
+                    graphService = new EmbeddedReadOnlyGraphDatabase(dbFolder);
+                }                
+            }            
+        }        
     }
     
     public Node createNode() {
